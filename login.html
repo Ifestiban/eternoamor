@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Evento de Casais</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: hsl(0, 17%, 98%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Banners Animados */
+        .banner-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .banner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            color: white;
+            font-size: 24px;
+            line-height: 200px;
+            text-align: center;
+            animation: slide 15s infinite;
+        }
+
+        .banner:nth-child(2) {
+            animation-delay: 5s;
+        }
+
+        .banner:nth-child(3) {
+            animation-delay: 10s;
+        }
+
+        @keyframes slide {
+            0% {
+                left: 100%;
+            }
+            20% {
+                left: 0;
+            }
+            40% {
+                left: 0;
+            }
+            60% {
+                left: -100%;
+            }
+            80% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Botões chamativos */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #f54c8a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #e7386f;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #d02057;
+            transform: scale(0.95);
+        }
+
+        /* Cursor de coração ao clicar em links */
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: url('cursor-coracao.png'), auto; /* Imagem do cursor de coração */
+        }
+
+        /* Estilos dos corações flutuando */
+        #hearts-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            transform: rotate(45deg);
+            animation: subir 5s linear infinite, explodir 0.5s forwards;
+        }
+
+        .hearts::before,
+        .hearts::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .hearts::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .hearts::after {
+            top: 0;
+            left: -10px;
+        }
+
+        @keyframes subir {
+            0% {
+                bottom: 0;
+                opacity: 1;
+            }
+            100% {
+                bottom: 100%;
+                opacity: 0;
+            }
+        }
+
+        .explosao {
+            animation: estourar 0.5s forwards;
+        }
+
+        @keyframes estourar {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            margin-top: 20px;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            position: fixed;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Banners Animados -->
+    <div class="banner-container">
+        <div class="banner"><img src="banner01.png" alt="Banner 1"></div>
+        <div class="banner"><img src="banner02.png" alt="Banner 2"></div>
+        <div class="banner"><img src="banner03.png" alt="Banner 3"></div>
+    </div>
+
+    <!-- Botões abaixo dos banners -->
+    <div class="buttons-container">
+        <button id="pagueAgoraBtn" onclick="abrirModalPix()">Pague Agora</button>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJKQXcPKsnkEhQIXDoqYtEM96g_RwLIUQ-ZP0fNJY5ORbsnQ/viewform" target="_blank">
+            <button>Formulário de Inscrição</button>
+        </a>
+    </div>
+
+    <!-- Container do Login -->
+    <div id="login-container" class="login-container">
+        <h2>Login</h2>
+        <form>
+            <label for="login">Usuário:</label>
+            <input type="text" id="login" name="login"><br><br>
+    
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha"><br><br>
+    
+            <button type="button" onclick="autenticarUsuario()">Entrar</button>
+        </form>
+        <p class="error-message" id="errorMessage">Usuário ou senha inválidos!</p>
+    </div>
+
+    <!-- Modal para exibir o comprovante -->
+    <div id="comprovanteModal" class="modal">
+        <div class="modal-content">
+            <h3>PAGUE PELO PIX</h3>
+            <div class="qr-container">
+                <img src="qrcode-pix.png" alt="codigo pix">
+            </div>
+            <p><strong>Data de Pagamento:</strong> <span id="dataPagamento"></span></p>
+            <p><strong>PIX Copie e Cola:</strong></p>
+            <textarea id="pixCodigo" readonly>00020126510014BR.GOV.BCB.PIX0129eternoamoriadplango@gmail.com5204000053039865802BR5911ETERNO AMOR6013Planaltina Go62070503***63047A4A</textarea>
+            <div class="button-container">
+                <button onclick="fecharComprovanteModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contêiner para os corações -->
+    <div id="hearts-container"></div>
+
+    <script>
+        function criarCoracoes() {
+            const container = document.getElementById('hearts-container');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'hearts';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDuration = `${3 + Math.random() * 2}s`;
+                container.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.classList.add('explosao');
+                    setTimeout(() => heart.remove(), 500);
+                }, 5000);
+            }, 1000);
+        }
+
+        function autenticarUsuario() {
+            const usuario = document.getElementById('login').value;
+            const senha = document.getElementById('senha').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (usuario === "admin" && senha === "1234") {
+                alert("Login bem-sucedido!");
+                errorMessage.style.display = "none";
+                window.location.href = 'index.html'; // Redireciona para index.html após login bem-sucedido
+            } else {
+                errorMessage.style.display = "block";
+            }
+            // Armazena um token de login no localStorage
+            localStorage.setItem("loginToken", "usuarioAutenticado");
+
+        }
+
+        function abrirModalPix() {
+            document.getElementById("comprovanteModal").style.display = "block";
+        }
+
+        function fecharComprovanteModal() {
+            document.getElementById("comprovanteModal").style.display = "none";
+        }
+
+        window.onload = criarCoracoes;
+    </script>
+</body>
+</html>

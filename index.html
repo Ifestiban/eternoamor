@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento de Casais</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+        .modal h3 {
+            margin-top: 0;
+        }
+    </style>
+    <!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
+</head>
+<body>
+    <button id="logoutButton" onclick="logout()">Logout</button> <!-- Botão de logout discreto -->
+
+    <div class="container">
+        <h1>Evento de Casais</h1>
+        
+        <!-- Banners Animados -->
+        <div class="banner-container">
+            <div class="banner"><img src="banner01.png" alt="Banner 1"></div>
+            <div class="banner"><img src="banner02.png" alt="Banner 2"></div>
+            <div class="banner"><img src="banner03.png" alt="Banner 3"></div>
+        </div>
+
+        <!-- Botão do Menu -->
+<div class="menu-container">
+    <button class="menu-btn" onclick="toggleMenu()">
+        <!-- Ícone de três barras horizontais -->
+        &#9776;
+    </button>
+    <div id="menuContent" class="menu-content">
+        <button onclick="mostrarFormulario()">Adicionar Casal</button>
+        <button onclick="gerarRelatorio()">Gerar Relatório</button>
+        <button onclick="abrirModalDespesas()">Adicionar Despesas</button>
+        <button onclick="abrirModalEntradas()">Adicionar Entradas</button>
+        <button onclick="consultarDespesas()">Consultar Despesas</button>
+        <button onclick="consultarEntradas()">Consultar Entradas</button>
+        <button onclick="logout()">Logout</button> <!-- Adicionando o botão de logout aqui -->
+    </div>
+</div>
+
+
+        <!-- Formulário de Inscrição (Oculto inicialmente) -->
+        <div id="formulario" style="display:none;">
+            <form id="casalForm">
+                <h2>Cadastro de Casal</h2>
+                <div class="form-group">
+                    <label for="nomeEle">Nome completo do Casal (ELE):</label>
+                    <input type="text" id="nomeEle" required>
+                </div>
+                <div class="form-group">
+                    <label for="nomeEla">Nome completo do Casal (ELA):</label>
+                    <input type="text" id="nomeEla" required>
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">OBSERVAÇÕES:</label>
+                    <textarea id="observacoes"></textarea>
+                </div>
+                <button type="button" onclick="adicionarCasal()">Salvar Casal</button>
+            </form>
+            <div class="sucesso-mensagem" id="mensagemSucessoCasal"></div>
+        </div>
+
+        <!-- Tabela de Casais (Oculta) -->
+        <div id="tabelaCasaisContainer" style="display:none;">
+            <table id="tabelaCasais">
+                <thead>
+                    <tr>
+                        <th>Nome do Marido</th>
+                        <th>Nome da Esposa</th>
+                        <th>Entradas</th>
+                        <th>Saídas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Novas linhas serão adicionadas aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Imagem Romântica na Tela Inicial -->
+        <div class="tela-inicial">
+            <img src="imagem romantica.jpg" alt="Imagem Romântica">
+        </div>
+        <!-- Botão para consultar todas as notas fiscais -->
+<button id="consultarNotasBtn" onclick="consultarNotasFiscais()">Consultar Notas Fiscais</button>
+
+<!-- Modal para exibir as notas fiscais -->
+<div id="modalNotasFiscais" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModalNotasFiscais()">&times;</span>
+        <h2>Notas Fiscais Lançadas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Razão Social</th>
+                    <th>CNPJ</th>
+                    <th>Número do Documento</th>
+                    <th>Valor</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaNotasFiscais">
+                <!-- As notas fiscais serão inseridas aqui -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal para exibir a listagem de Despesas -->
+<div id="modalDespesasConsulta" class="modal" style="display:none;">
+    <h3>Lista de Despesas</h3>
+    <table id="tabelaDespesas">
+        <thead>
+            <tr>
+                <th>Tipo de Despesa</th>
+                <th>Valor (R$)</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Despesas serão adicionadas aqui dinamicamente -->
+        </tbody>
+    </table>
+    <button onclick="fecharModalConsulta('modalDespesasConsulta')">Fechar</button>
+</div>
+
+<!-- Modal para exibir a listagem de Entradas -->
+<div id="modalEntradasConsulta" class="modal" style="display:none;">
+    <h3>Lista de Entradas</h3>
+    <table id="tabelaEntradas">
+        <thead>
+            <tr>
+                <th>Nome do Casal</th>
+                <th>Valor (R$)</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Entradas serão adicionadas aqui dinamicamente -->
+        </tbody>
+    </table>
+    <button onclick="fecharModalConsulta('modalEntradasConsulta')">Fechar</button>
+</div>
+
+        <!-- Modal para adicionar despesas -->
+        <div id="modalDespesas" class="modal">
+            <h3>Adicionar Despesa</h3>
+            <label for="tipoDespesa">Tipo de Despesa:</label>
+            <select id="tipoDespesa">
+                <option value="Repasse para o Hotel">Repasse para o Hotel</option>
+                <option value="Presentes">Presentes</option>
+                <option value="Outras Despesas">Outras Despesas</option>
+            </select>
+            <label for="valorDespesa">Valor (R$):</label>
+            <input type="number" id="valorDespesa" required>
+            <button onclick="adicionarDespesa()">Salvar Despesa</button>
+            <button onclick="fecharModalDespesas()">Fechar</button>
+        </div>
+<!-- Modal de tela cheia para adicionar despesa com nota fiscal -->
+<div id="modalNotaFiscal">
+    <div>
+        <h2>Adicionar Nota Fiscal</h2>
+        <form id="notaFiscalForm">
+            <label for="razaoSocial">Razão Social:</label>
+            <input type="text" id="razaoSocial" name="razaoSocial" required>
+
+            <label for="cnpj">CNPJ:</label>
+            <input type="text" id="cnpj" name="cnpj" required>
+
+            <label for="numeroDocumento">Número do Documento:</label>
+            <input type="text" id="numeroDocumento" name="numeroDocumento" required>
+
+            <label for="valorDespesaNota">Valor da Despesa:</label>
+            <input type="number" id="valorDespesaNota" name="valorDespesaNota" required>
+
+            <label for="descricaoDespesa">Descrição da Despesa:</label>
+            <textarea id="descricaoDespesa" name="descricaoDespesa" required></textarea>
+
+            <button type="button" onclick="adicionarDespesaNota()">Salvar Nota Fiscal</button>
+            <button type="button" onclick="fecharModalNotaFiscal()">Cancelar</button>
+        </form>
+        <form id="dataForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required><br><br>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+        
+            <label for="message">Mensagem:</label>
+            <textarea id="message" name="message" required></textarea><br><br>
+        
+            <button type="submit">Enviar</button>
+        </form>
+        
+    </div>
+</div>
+
+        <!-- Modal para adicionar entradas -->
+        <div id="modalEntradas" class="modal">
+            <h3>Adicionar Entrada</h3>
+            <label for="casalEntrada">Filtrar por Casal:</label>
+            <select id="casalEntrada">
+                <!-- As opções serão geradas dinamicamente -->
+            </select>
+            <label for="valorEntrada">Valor (R$):</label>
+            <input type="number" id="valorEntrada" required>
+            <button onclick="adicionarEntrada()">Salvar Entrada</button>
+            <button onclick="fecharModalEntradas()">Fechar</button>
+        </div>
+
+        <!-- Container para exibir relatório -->
+        <div id="relatorioContainer"></div>
+    </div>
+
+    </script>
+
+    <script src="scripts.js"></script>
+</body>
+
+<footer>
+    <p class="footer-text">© 2024 Eterno Amor CNPJ 03.286.847/0001-72. Todos os direitos reservados.</p>
+</footer>
+</html>

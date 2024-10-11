@@ -1,0 +1,503 @@
+/* Estilo geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+/* Container principal */
+.container {
+    text-align: center;
+    margin: 20px;
+}
+
+/* Imagem Romântica */
+.tela-inicial img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botões */
+button, #linkFormulario {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Botão de Fechar Formulário */
+#fecharFormulario {
+    background-color: #6c757d;
+}
+
+/* Animações dos botões */
+button:hover, #linkFormulario:hover {
+    background-color: #ff4c3b;
+    transform: scale(1.1);
+}
+
+/* Cursor em formato de coração */
+#linkFormulario {
+    cursor: url('coração.png'), auto;
+}
+
+/* Estilizando a tabela */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #ff6f61;
+    color: white;
+}
+
+/* Relatório */
+#relatorio {
+    margin-top: 20px;
+}
+
+/* Comprovante */
+#comprovanteContainer {
+    margin-top: 20px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#comprovanteContainer button {
+    margin-top: 10px;
+}
+
+/* Estilo dos grupos de formulário */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    width: 200px; /* Largura fixa para os rótulos */
+    margin-right: 10px; /* Espaçamento entre o rótulo e o campo de entrada */
+    text-align: right; /* Alinha o texto à direita para melhor alinhamento */
+}
+
+.form-group input {
+    flex: 1; /* Faz com que o campo de entrada ocupe o espaço restante */
+}
+
+#comprovanteContainer img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+/* Estilo do Modal de Despesas */
+#modalDespesas {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para a Tabela de Despesas */
+#tabelaDespesas th, #tabelaDespesas td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tabelaDespesas th {
+    background-color: #ff6f61;
+    color: white;
+}
+
+/* Estilo da tabela de casais (inicialmente oculta) */
+#tabelaCasais {
+    display: none; /* Oculta a tabela inicialmente */
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#tabelaCasais th, #tabelaCasais td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#tabelaCasais th {
+    background-color: #ff6f61;
+    color: white;
+}
+
+/* Botão de Logout */
+#logoutButton {
+    position: fixed; /* Use 'fixed' para que o botão permaneça no canto mesmo ao rolar a página */
+    top: 10px;
+    right: 10px;
+    background-color: transparent; /* Fundo transparente para discrição */
+    color: #343a40; /* Cor discreta */
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    z-index: 1001; /* Certifique-se de que esteja acima de outros elementos */
+}
+
+#logoutButton:hover {
+    color: #ff6f61; /* Destaque ao passar o mouse */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f8f8f8; /* Cor de fundo discreta */
+    font-size: 12px; /* Tamanho pequeno para discrição */
+    color: #777; /* Cor de texto suave */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e7e7e7; /* Linha superior para destacar */
+}
+
+.footer-text {
+    margin: 0;
+}
+
+/* Banners Animados */
+.banner-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.banner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 24px;
+    line-height: 200px;
+    text-align: center;
+    animation: slide 15s infinite;
+}
+
+.banner:nth-child(2) {
+    animation-delay: 5s;
+}
+
+.banner:nth-child(3) {
+    animation-delay: 10s;
+}
+
+@keyframes slide {
+    0% {
+        left: 100%;
+    }
+    20% {
+        left: 0;
+    }
+    40% {
+        left: 0;
+    }
+    60% {
+        left: -100%;
+    }
+    80% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Estilo geral das tabelas */
+#tabelaCasais, #tabelaDespesas {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#tabelaCasais th, #tabelaDespesas th, 
+#tabelaCasais td, #tabelaDespesas td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#tabelaCasais th, #tabelaDespesas th {
+    background-color: #ff6f61;
+    color: white;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f8f8f8;
+    font-size: 12px;
+    color: #777;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e7e7e7;
+}
+
+.footer-text {
+    margin: 0;
+}
+
+/* Estilo para a caixa de seleção */
+select {
+    width: 100%; /* Faz a caixa de seleção ocupar toda a largura disponível */
+    padding: 8px; /* Adiciona preenchimento interno para melhorar o visual */
+    margin: 10px 0; /* Espaçamento entre os elementos */
+    border-radius: 5px; /* Bordas arredondadas para um visual mais moderno */
+    border: 1px solid #ccc; /* Bordas suaves para o campo de seleção */
+    box-sizing: border-box; /* Garante que o padding e a borda estejam dentro do width */
+    overflow: hidden; /* Evita que o texto ultrapasse a caixa de seleção */
+    text-overflow: ellipsis; /* Mostra "..." se o texto for longo demais */
+}
+
+/* Estilo para os corações */
+@keyframes subir {
+    0% {
+        bottom: 0;
+        opacity: 1;
+        transform: scale(0.5);
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+.hearts {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    transform: rotate(-45deg);
+    animation: subir 5s infinite;
+    opacity: 0;
+}
+
+.hearts:before, .hearts:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.hearts:before {
+    top: -10px;
+    left: 0;
+}
+
+.hearts:after {
+    left: 10px;
+    top: 0;
+}
+
+@keyframes estourar {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.explosao {
+    position: fixed;
+    bottom: 100%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    animation: estourar 0.5s ease-out forwards;
+}
+/* Estilo para sobrepor toda a tela */
+#modalNotaFiscal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo do formulário dentro do modal */
+#modalNotaFiscal form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 50%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo para cada label e input do formulário */
+#modalNotaFiscal label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilo dos inputs para ficar 100% do tamanho da área disponível */
+#modalNotaFiscal input, 
+#modalNotaFiscal textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Estilo específico para o textarea */
+#modalNotaFiscal textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Botões no final do formulário */
+#modalNotaFiscal button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#modalNotaFiscal button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+#modalNotaFiscal button:hover {
+    opacity: 0.9;
+}
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        width: 80%;
+        margin: auto;
+    }
+
+    .modal-content table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .modal-content th, .modal-content td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .close {
+        float: right;
+        cursor: pointer;
+    }
+
+    #modalNotasFiscais {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    body {
+        position: relative;
+        z-index: 1;
+    }
+    
+    header, footer {
+        position: relative;
+        z-index: 2;
+    }
+    /* Menu suspenso com botões */
+    .menu-container {
+        position: absolute; /* Fixar no topo */
+        top: 10px;
+        left: 10px; /* Alinhar à esquerda */
+        display: inline-block;
+    }
+    
+    .menu-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 24px; /* Tamanho do ícone */
+    }
+    
+    .menu-content {
+        display: none;
+        position: absolute;
+        left: 0; /* Alinhar o dropdown à esquerda */
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    
+    .menu-content button {
+        background-color: #f9f9f9;
+        color: black;
+        padding: 12px 16px;
+        border: none;
+        text-align: left;
+        width: 100%;
+        cursor: pointer;
+    }
+    
+    .menu-content button:hover {
+        background-color: #ddd;
+    }
+    
