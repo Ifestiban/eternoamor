@@ -134,6 +134,7 @@
             z-index: -1;
         }
 
+        /* Estilo para os corações */
         .hearts {
             position: absolute;
             width: 20px;
@@ -172,10 +173,6 @@
                 bottom: 100%;
                 opacity: 0;
             }
-        }
-
-        .explosao {
-            animation: estourar 0.5s forwards;
         }
 
         @keyframes estourar {
@@ -277,6 +274,35 @@
             <button onclick="fecharModalPix()">Fechar</button>
         </div>
     </div>
+    <script>
+         // Função para gerar corações em quantidades decrescentes
+         function gerarCoracoes() {
+            const heartsContainer = document.getElementById('hearts-container');
+            let quantidade = 50; // Quantidade inicial de corações
+
+            function adicionarCoracoes() {
+                for (let i = 0; i < quantidade; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('hearts');
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = Math.random() * 2 + 3 + 's'; // Duração entre 3 e 5 segundos
+                    heartsContainer.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove(); // Remove o coração após sua animação
+                    }, 5000);
+                }
+
+                if (quantidade > 0) {
+                    quantidade--; // Reduz a quantidade a cada iteração
+                }
+            }
+
+            setInterval(adicionarCoracoes, 1000);
+        }
+
+        gerarCoracoes();
+    </script>
 
     <script>
         // Função para abrir o modal
@@ -307,23 +333,7 @@
             // Armazena um token de login no localStorage
             localStorage.setItem("loginToken", "usuarioAutenticado");
         }
-
-        // Função para gerar corações
-        function gerarCoracoes() {
-            const container = document.getElementById("hearts-container");
-            for (let i = 0; i < 50; i++) {
-                const coracao = document.createElement("div");
-                coracao.className = "hearts";
-                coracao.style.left = Math.random() * 100 + "vw"; // Posição horizontal aleatória
-                container.appendChild(coracao);
-                setTimeout(() => {
-                    coracao.classList.add("explosao"); // Adiciona a classe de explosão
-                }, Math.random() * 2000); // Tempo aleatório para explosão
-            }
-        }
-
-        // Chama a função para gerar corações ao carregar a página
-        window.onload = gerarCoracoes;
+        
     </script>
 </body>
 </html>
