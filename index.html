@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eterno Amor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - Evento de Casais</title>
+    <link rel="shortcut icon" href="imagens/favicon-32x32.png" type="image/x-icon">
+    <!-- Seus estilos e scripts aqui -->
+</head>
+<body>
+  
+    <!-- O restante do seu conteúdo da página index.html -->
+</body>
+
+
+     <!-- Container para os botões -->
+<div class="button-container">
+    <button id="showFormBtn">Adicionar Casal</button>
+    <button id="openCouplesModalBtn">Ver Lista de Casais</button>
+    <button id="openReportModalBtn">Relatório de Entradas e Saídas</button>
+    <button id="openModalBtn">Adicionar Entrada</button>
+    <button id="openExpenseFormBtn">Adicionar Despesa</button>
+    <button id="openDeleteDespesaModalBtn">Excluir Despesa</button>
+</div>
+    <!-- Botão de Sair -->
+    <button id="logoutButton" onclick="logout()"></button>
+
+     <!-- Banners Animados -->
+     <div class="banner-container">
+        <div class="banner"><img src="imagens/banner01.png" alt="Banner 1"></div>
+        <div class="banner"><img src="imagens/banner02.png" alt="Banner 2"></div>
+        <div class="banner"><img src="imagens/banner03.png" alt="Banner 3"></div>
+    </div>
+   
+    <div class="heart">
+        <img src="imagens/imagem romantica.jpg" alt="Coração Romântico">
+    </div>
+
+    <!-- Botão para abrir o formulário de adicionar casal -->
+ 
+
+    <!-- Formulário para adicionar casal (escondido inicialmente) -->
+    <div id="addCoupleForm" style="display: none;">
+        <label for="nomeEle">Nome Ele:</label>
+        <input type="text" id="nomeEle">
+        <label for="nomeEla">Nome Ela:</label>
+        <input type="text" id="nomeEla">
+        <button id="addCoupleBtn">Adicionar Casal</button>
+        <button id="closeFormBtn">Fechar</button>
+    </div>
+
+    <!-- Botão para abrir o modal com a lista de casais -->
+  
+
+    <!-- Modal para mostrar a lista de casais -->
+    <div id="couplesModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="closeModal" style="cursor:pointer; float:right;">&times;</span>
+            <button id="printCoupleListBtn" title="Imprimir Lista" style="font-size: 14px; margin-left: 10px;">🖨️</button>
+            <h1>Lista de Casais</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome Ele</th>
+                        <th>Nome Ela</th>
+                    </tr>
+                </thead>
+                <tbody id="coupleTableBody">
+                    <!-- As linhas dos casais serão inseridas aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Botão para abrir o modal de relatório -->
+
+
+   <!-- Modal de Relatório -->
+<div id="reportModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span id="closeReportModalBtn" class="close" style="cursor:pointer;">&times;</span>
+        <h2>Relatório de Entradas e Saídas</h2>
+
+        <!-- Inputs para filtrar por data -->
+        <label for="dataInicial">Data Inicial:</label>
+        <input type="date" id="dataInicial">
+        <label for="dataFinal">Data Final:</label>
+        <input type="date" id="dataFinal">
+        
+        <!-- Filtro para tipo de relatório -->
+        <label for="tipoRelatorio">Tipo de Relatório:</label>
+        <select id="tipoRelatorio">
+            <option value="todos">Todos</option>
+            <option value="entradas">Entradas</option>
+            <option value="saidas">Saídas</option>
+        </select>
+
+        <button id="consultarRelatorioBtn">Consultar Relatório</button>
+
+        <div id="reportContent">
+            
+            <table id="reportTableEntradas" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Nome do Casal</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBodyEntradas">
+                    <!-- Conteúdo será inserido dinamicamente -->
+                </tbody>
+            </table>
+
+           
+            <table id="reportTableSaidas" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Razão Social</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBodySaidas">
+                    <!-- Conteúdo será inserido dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+
+        <button id="printReportBtn">Imprimir Relatório</button>
+    </div>
+</div>
+
+
+
+    <!-- Botão para abrir o modal de adicionar entrada -->
+  
+
+    <!-- Modal para adicionar entrada -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Adicionar Entrada</h3>
+            
+            <!-- Campo para filtrar casais -->
+            <label for="coupleFilter">Filtrar Casal:</label>
+            <input type="text" id="coupleFilter" oninput="filterCouples()" placeholder="Digite o nome do casal" style="width: 100%;">
+
+            <!-- Lista suspensa de casais filtrados -->
+            <label for="filteredCoupleList">Selecione o Casal:</label>
+            <select id="filteredCoupleList" style="width: 100%; margin-bottom: 10px;">
+                <!-- Aqui serão listados os casais filtrados -->
+            </select>
+
+            <!-- Campo para o valor da entrada -->
+            <label for="amount">Entrada (R$):</label>
+            <input type="number" id="amount" placeholder="Digite o valor" style="width: 100%; margin-bottom: 10px;">
+<!-- Botões de ação no modal de "Adicionar Entrada" -->
+<button id="submitBtn" style="margin-right: 10px;">Adicionar Entrada</button>
+<button id="openDeleteEntradaModalBtn" style="margin-right: 10px;">Excluir Entrada</button>
+<button id="closeModalBtn">Fechar</button>
+
+        </div>
+    </div>
+  <!-- Modal de exclusão de entradas -->
+<div id="deleteEntradaModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span id="closeDeleteEntradaModalBtn" class="close" style="cursor:pointer;">&times;</span>
+        <h3>Excluir Entrada</h3>
+
+        <!-- Campo para filtrar casais na exclusão -->
+        <label for="deleteCoupleFilter">Filtrar Casal:</label>
+        <input type="text" id="deleteCoupleFilter" oninput="filterDeleteCouples()" placeholder="Digite o nome do casal" style="width: 100%;">
+
+        <!-- Tabela de entradas a serem excluídas -->
+        <table id="deleteEntradaTable">
+            <thead>
+                <tr>
+                    <th>Nome do Casal</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="deleteEntradaTableBody">
+                <!-- Entradas serão inseridas dinamicamente aqui -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal de exclusão de despesas -->
+<div id="deleteDespesaModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span id="closeDeleteDespesaModalBtn" class="close" style="cursor:pointer;">&times;</span>
+        <h3>Excluir Despesa</h3>
+
+        <!-- Campo para filtrar despesas na exclusão -->
+        <label for="deleteDespesaFilter">Filtrar Despesa:</label>
+        <input type="text" id="deleteDespesaFilter" oninput="filterDeleteDespesas()" placeholder="Digite a descrição da despesa" style="width: 100%;">
+
+        <!-- Tabela de despesas a serem excluídas -->
+        <table id="deleteDespesaTable">
+            <thead>
+                <tr>
+                    <th>Razão Social</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="deleteDespesaTableBody">
+                <!-- Despesas serão inseridas dinamicamente aqui -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+    <!-- Modal de Recibo -->
+    <div id="reciboModal" style="display: none;">
+        <div id="reciboBody"></div>
+        <button id="printReciboBtn">Imprimir Recibo</button>
+        <button id="closeReciboModalBtn">Fechar</button>
+    </div>
+
+    <!-- Botão para abrir o formulário de despesas -->
+
+
+<!-- Botão para abrir o modal de exclusão de despesas -->
+
+
+<form id="expenseForm">
+    <div id="addExpenseForm" style="display:none;">
+        <h2>Adicionar Despesa</h2>
+        <label for="razaoSocial">Razão Social:</label>
+        <input type="text" id="razaoSocial"><br>
+
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" id="cnpj"><br>
+
+        <label for="dataCompra">Data da Compra:</label>
+        <input type="date" id="dataCompra"><br>
+
+        <label for="numeroDocumento">Número do Documento:</label>
+        <input type="text" id="numeroDocumento"><br>
+
+        <label for="valorCompra">Valor da Compra:</label>
+        <input type="number" id="valorCompra"><br>
+
+        <label for="chaveAcesso">Chave de Acesso:</label>
+        <input type="text" id="chaveAcesso"><br>
+
+        <label for="descricaoCompra">Descrição da Compra:</label>
+        <textarea id="descricaoCompra"></textarea><br>
+
+        <button type="button" id="addExpenseBtn">Adicionar Despesa</button>
+        <button type="button" id="closeExpenseFormBtn">Fechar</button>
+    </div>
+</form>
+
+
+    <!-- Container para exibir as despesas -->
+    <div id="despesasContainer"></div>
+
+    <!-- Script geral -->
+    <script src="scripts.js"></script>
+    
+    <!-- Rodapé -->
+<footer class="footer">
+    <p>Todos os direitos reservados &copy; ETERNO AMOR CNPJ 03.286.847/0001-72</p>
+</footer>
+
+</body>
+</html>

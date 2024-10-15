@@ -1,0 +1,387 @@
+/* Animação do coração */
+body {
+    display: flex;
+    flex-direction: column; /* Para permitir o alinhamento vertical */
+    justify-content: flex-start; /* Para manter os banners no topo */
+    align-items: center; /* Alinha horizontalmente o conteúdo */
+    margin: 0;
+    background-color: #fce4ec;
+}
+
+.heart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: heartbeat 1s infinite;
+    margin-top: 100px; /* Adiciona espaço suficiente para o banner */
+}
+
+.heart img {
+    width: 500px;
+    height: auto; /* Para manter a proporção da imagem */
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Estilo para ocultar a lista de casais por padrão */
+#coupleList {
+    display: none;
+}
+
+/* Estilos do Modal */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed; /* Fixa o modal na tela */
+    z-index: 1000; /* Fica em cima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    overflow: auto; /* Permite rolagem se necessário */
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro semi-transparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Espaço acima e centraliza */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%; /* Largura do modal */
+    max-height: 80%; /* Altura máxima do modal */
+    overflow-y: auto; /* Permite rolagem vertical se necessário */
+}
+
+/* Estilos da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Cor alternada para melhor visualização */
+}
+/* Menu adicionar despesa com nota Fiscal */
+#addExpenseForm {
+    display: flex;
+    flex-direction: column; /* Alinha os elementos verticalmente */
+    margin: 0 auto; /* Remove margens verticais para ficar no topo */
+    padding: 20px; /* Aumenta o preenchimento interno */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    max-width: 500px; /* Define uma largura máxima para o formulário */
+    width: 100%; /* Faz o formulário ocupar toda a largura disponível até o máximo */
+    position: absolute; /* Usando position absolute para posicionamento em relação ao elemento pai */
+    top: 100px; /* Ajuste este valor para posicionar o formulário em relação ao topo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Centraliza o formulário com base na largura */
+    z-index: 9999; /* Aumenta o z-index para que fique acima dos outros elementos */
+}
+
+#addExpenseForm label {
+    margin-bottom: 5px; /* Espaçamento entre o rótulo e o campo */
+}
+
+#addExpenseForm input,
+#addExpenseForm textarea {
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+    padding: 8px; /* Preenchimento interno */
+    border: 1px solid #ccc; /* Borda dos campos */
+    border-radius: 4px; /* Bordas arredondadas */
+    width: 100%; /* Faz os campos ocuparem toda a largura disponível */
+}
+
+#addExpenseForm button {
+    padding: 10px; /* Aumenta o preenchimento dos botões */
+    border: none; /* Remove bordas padrão */
+    border-radius: 4px; /* Bordas arredondadas nos botões */
+    cursor: pointer; /* Cursor em forma de ponteiro ao passar por cima */
+}
+
+#addExpenseForm button:hover {
+    background-color: #ddd; /* Efeito ao passar o mouse sobre os botões */
+}
+
+
+/* Estilo para o menu adicionar casal */
+#addCoupleForm {
+    display: flex;
+    flex-direction: column; /* Alinha os elementos verticalmente */
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    position: absolute; /* Faz o formulário sobrepor outros elementos */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta o centro do formulário */
+    z-index: 1000; /* Garante que o formulário fique acima de outros elementos */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adiciona sombra para destaque */
+}
+
+#addCoupleForm label {
+    margin-bottom: 5px; /* Espaçamento entre o rótulo e o campo */
+}
+
+#addCoupleForm input {
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+    padding: 8px; /* Preenchimento interno */
+    border: 1px solid #ccc; /* Borda dos campos */
+    border-radius: 4px; /* Bordas arredondadas */
+    width: 100%; /* Faz os campos ocuparem toda a largura disponível */
+}
+
+#addCoupleForm button {
+    padding: 10px; /* Preenchimento dos botões */
+    border: none; /* Remove bordas padrão */
+    border-radius: 4px; /* Bordas arredondadas nos botões */
+    cursor: pointer; /* Cursor em forma de ponteiro ao passar por cima */
+}
+
+#addCoupleForm button:hover {
+    background-color: #ddd; /* Efeito ao passar o mouse sobre os botões */
+}
+#printCoupleListBtn {
+    font-size: 14px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #007BFF;
+    transition: color 0.3s;
+}
+
+#printCoupleListBtn:hover {
+    color: #0056b3;
+}
+@media print {
+    #printCoupleListBtn {
+        display: none !important; /* Oculta o botão de imprimir ao imprimir */
+    }
+}
+/* Menu adicionar */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaçamento entre os elementos */
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+input, select, button {
+    width: 100%; /* Faz com que os campos ocupem toda a largura do container */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #e2c9d6;
+}
+/* Estilos do modal */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4); /* Fundo escuro */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos da tabela de relatório */
+#reportTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#reportTable th, #reportTable td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+#reportTable th {
+    background-color: #f2f2f2;
+}
+
+/* Estilo do botão de impressão */
+#printReportBtn {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#printReportBtn:hover {
+    background-color: #0056b3;
+}
+#despesasContainer {
+    display: none; /* Esconde o container por padrão */
+}
+
+#despesasList {
+    list-style-type: none; /* Remove os marcadores da lista */
+    padding: 0; /* Remove o padding da lista */
+}
+body {
+    margin: 0; /* Remove margens do body */
+    padding: 0; /* Remove padding do body */
+}
+
+.banner-container { /* Banners animados*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: #fce4ec;
+    z-index: 1000;
+}
+
+.banner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Mostra os banners */
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fce4ec;
+    transform: translateX(100%); /* Começa fora da tela à direita */
+    transition: transform 1s ease-in-out;
+    opacity: 0; /* Tornar invisível inicialmente */
+}
+
+.banner.active {
+    transform: translateX(0); /* Move o banner para dentro da tela */
+    opacity: 1; /* Tornar visível */
+}
+
+.banner.exit {
+    transform: translateX(-100%); /* Sai para a esquerda */
+    opacity: 0;
+}
+
+.banner-container {
+    position: relative; /* Para permitir que z-index funcione */
+    z-index: 1; /* Z-index baixo para que os banners fiquem atrás */
+}
+
+.button-container {
+    display: flex; /* Use flexbox para organizar os botões em linha */
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    margin: 20px 0; /* Margem acima e abaixo do contêiner */
+    position: relative; /* Para permitir que z-index funcione */
+    z-index: 0; /* Z-index alto para que os botões fiquem na frente */
+}
+
+.button-container button {
+    margin: 0 10px; /* Margem entre os botões */
+    padding: 10px 20px; /* Espaçamento interno dos botões */
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    border: none; /* Remove bordas */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #007bff; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+.button-container button:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+/* Todos os direito reservados rodapé */
+.footer {
+    text-align: center; /* Centraliza o texto no rodapé */
+    padding: 5px 0; /* Espaçamento interno no rodapé */
+    font-size: 12px; /* Tamanho pequeno para o texto */
+    color: #777; /* Cor discreta (cinza) */
+    background-color: #fce4ec; /* Fundo claro e discreto */
+    border-top: 1px solid #fce4ec; /* Linha superior para separar o rodapé */
+    position: fixed; /* Fixa o rodapé na parte inferior da página */
+    width: 100%; /* Ocupa toda a largura da página */
+    bottom: 0; /* Posiciona na parte inferior */
+}
+/* Botão de sair*/
+#logoutButton {
+    position: absolute;
+    top: 0px; /* Ajuste a distância do topo */
+    left: 0px; /* Ajuste a distância da direita */
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    color: blue; /* Cor do texto */
+    cursor: pointer; /* Cursor de mão */
+    font-size: 14px; /* Tamanho da fonte */
+    text-decoration: underline; /* Para parecer um link */
+    z-index: 10000
+}
+@media (max-width: 600px) {
+    .login-container {
+        width: 90%; /* Define a largura da caixa de login para 90% em telas pequenas */
+        padding: 15px; /* Ajusta o padding para telas menores */
+    }
+
+    input {
+        padding: 8px; /* Ajusta o padding dos campos de entrada */
+        font-size: 16px; /* Aumenta o tamanho da fonte dos campos de entrada */
+    }
+
+    button {
+        padding: 12px 20px; /* Ajusta o padding dos botões */
+        font-size: 14px; /* Aumenta o tamanho da fonte dos botões */
+    }
+}
