@@ -123,8 +123,8 @@
             margin-top: 10px;
         }
 
-        /* Contêiner para os corações */
-        #hearts-container {
+  /* Contêiner para os corações */
+  #hearts-container {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -188,22 +188,46 @@
             }
         }
         @media (max-width: 600px) {
-    .login-container {
-        width: 90%; /* Define a largura da caixa de login para 90% em telas pequenas */
-        padding: 15px; /* Ajusta o padding para telas menores */
-    }
+            .login-container {
+                width: 90%; /* Define a largura da caixa de login para 90% em telas pequenas */
+                padding: 15px; /* Ajusta o padding para telas menores */
+            }
 
-    input {
-        padding: 8px; /* Ajusta o padding dos campos de entrada */
-        font-size: 16px; /* Aumenta o tamanho da fonte dos campos de entrada */
-    }
+            input {
+                padding: 8px; /* Ajusta o padding dos campos de entrada */
+                font-size: 16px; /* Aumenta o tamanho da fonte dos campos de entrada */
+            }
 
-    button {
-        padding: 12px 20px; /* Ajusta o padding dos botões */
-        font-size: 14px; /* Aumenta o tamanho da fonte dos botões */
-    }
-}
+            button {
+                padding: 12px 20px; /* Ajusta o padding dos botões */
+                font-size: 14px; /* Aumenta o tamanho da fonte dos botões */
+            }
+        }
 
+        /* Estilo para o modal */
+        .modal {
+            display: none; /* Esconde o modal por padrão */
+            position: fixed; /* Faz o modal se posicionar em relação à viewport */
+            top: 0; /* Posiciona no topo da página */
+            left: 0; /* Posiciona à esquerda da página */
+            width: 100%; /* Largura total da viewport */
+            height: 100%; /* Altura total da viewport */
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+            z-index: 1000; /* Coloca o modal acima do conteúdo */
+            display: flex; /* Para centralizar o conteúdo */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+        }
+
+        .modal-content {
+            background-color: white; /* Fundo branco para o conteúdo do modal */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 90%; /* Largura máxima responsiva */
+            overflow: auto; /* Permite rolagem se necessário */
+        }
     </style>
 </head>
 <body>
@@ -240,22 +264,32 @@
     <!-- Contêiner para os corações -->
     <div id="hearts-container"></div>
 
-    <script>
-        function criarCoracoes() {
-            const container = document.getElementById('hearts-container');
-            
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'hearts';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.animationDuration = `${3 + Math.random() * 2}s`;
-                container.appendChild(heart);
+    <!-- Modal do PIX -->
+    <div id="comprovanteModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>PAGUE PELO PIX</h3>
+            <div class="qr-container" style="display: flex; justify-content: center; align-items: center;">
+                <img src="imagens/qrcode-pix.png" alt="codigo pix" style="max-width: 100%; height: auto;">
+            </div>
+            <p><strong>Data de Pagamento:</strong> <span id="dataPagamento"></span></p>
+            <p><strong>PIX Copie e Cola:</strong></p>
+            <textarea id="codigoPix" rows="3" readonly style="width: 100%;"></textarea>
+            <button onclick="fecharModalPix()">Fechar</button>
+        </div>
+    </div>
 
-                setTimeout(() => {
-                    heart.classList.add('explosao');
-                    setTimeout(() => heart.remove(), 500);
-                }, 5000);
-            }, 1000);
+    <script>
+        // Função para abrir o modal
+        function abrirModalPix() {
+            const data = new Date();
+            document.getElementById("dataPagamento").innerText = data.toLocaleDateString("pt-BR");
+            document.getElementById("codigoPix").value = "0000000000000000"; // Adicione o código PIX real aqui
+            document.getElementById("comprovanteModal").style.display = "flex"; // Exibe o modal
+        }
+
+        // Função para fechar o modal
+        function fecharModalPix() {
+            document.getElementById("comprovanteModal").style.display = "none"; // Esconde o modal
         }
 
         function autenticarUsuario() {
@@ -274,16 +308,22 @@
             localStorage.setItem("loginToken", "usuarioAutenticado");
         }
 
-        // Adiciona o listener para o evento keypress no campo de senha
-        window.onload = function() {
-            document.getElementById("senha").addEventListener("keypress", function(event) {
-                if (event.key === "Enter") { // Verifica se a tecla pressionada é "Enter"
-                    autenticarUsuario(); // Chama a função de autenticação
-                }
-            });
+        // Função para gerar corações
+        function gerarCoracoes() {
+            const container = document.getElementById("hearts-container");
+            for (let i = 0; i < 50; i++) {
+                const coracao = document.createElement("div");
+                coracao.className = "hearts";
+                coracao.style.left = Math.random() * 100 + "vw"; // Posição horizontal aleatória
+                container.appendChild(coracao);
+                setTimeout(() => {
+                    coracao.classList.add("explosao"); // Adiciona a classe de explosão
+                }, Math.random() * 2000); // Tempo aleatório para explosão
+            }
+        }
 
-            criarCoracoes(); // Inicia a função que cria corações
-        };
+        // Chama a função para gerar corações ao carregar a página
+        window.onload = gerarCoracoes;
     </script>
 </body>
 </html>
