@@ -23,23 +23,82 @@ document.getElementById("addCoupleBtn").addEventListener("click", () => {
         alert("Por favor, preencha os campos 'Nome Ele' e 'Nome Ela'.");
     }
 });
-
-// Função para adicionar casal na lista e salvar no localStorage
 function adicionarCasal(nomeEle, nomeEla) {
+    // Recupera a lista de casais do localStorage ou inicia uma nova lista
     const casais = JSON.parse(localStorage.getItem("casais")) || [];
-    const novoCasal = { nomeEle: nomeEle, nomeEla: nomeEla };
-
-    // Adiciona o novo casal à lista e salva no localStorage
+    
+    // Adiciona um novo casal com um ID único
+    const novoCasal = { id: Date.now(), nomeEle, nomeEla };
     casais.push(novoCasal);
+    
+    // Salva a lista atualizada de casais no localStorage
     localStorage.setItem("casais", JSON.stringify(casais));
-
+    
     // Exibe a mensagem de confirmação
     alert(`Casal ${nomeEle} e ${nomeEla} adicionado com sucesso!`);
-
+  
     // Atualiza a exibição dos casais
     renderizarCasais();
 }
 
+// Função que renderiza os casais na interface (exemplo)
+function renderizarCasais() {
+    // Aqui você deve adicionar o código para atualizar a exibição dos casais na interface
+    const casais = JSON.parse(localStorage.getItem("casais")) || [];
+    // Exemplo de como poderia ser feito (a lógica de renderização pode variar):
+    const lista = document.getElementById('listaCasais'); // Supondo que você tenha um elemento com esse ID
+    lista.innerHTML = ''; // Limpa a lista atual
+
+    casais.forEach(casal => {
+        const item = document.createElement('li');
+        item.textContent = `${casal.nomeEle} e ${casal.nomeEla}`;
+        lista.appendChild(item);
+    });
+}
+
+  
+  function renderizarCasais() {
+    const coupleTableBody = document.getElementById("coupleTableBody");
+    coupleTableBody.innerHTML = "";
+  
+    const casais = JSON.parse(localStorage.getItem("casais")) || [];
+  
+    casais.forEach(casal => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${casal.nomeEle}</td>
+        <td>${casal.nomeEla}</td>
+        <td><button onclick="excluirCasal(${casal.id})">Excluir</button></td>
+      `;
+      coupleTableBody.appendChild(row);
+    });
+  }
+  
+  function excluirCasal(casalId) {
+    const casais = JSON.parse(localStorage.getItem("casais")) || [];
+    const index = casais.findIndex(casal => casal.id === casalId);
+  
+    if (index !== -1) {
+      casais.splice(index, 1);
+      localStorage.setItem("casais", JSON.stringify(casais));
+      renderizarCasais(); // Atualiza a lista após a exclusão
+    } else {
+      console.error('Casal não encontrado');
+    }
+  }
+  
+  function excluirCasal(casalId) {
+    const casais = JSON.parse(localStorage.getItem("casais")) || [];
+    const index = casais.findIndex(casal => casal.id === casalId);
+  
+    if (index !== -1) {
+      casais.splice(index, 1);
+      localStorage.setItem("casais", JSON.stringify(casais));
+      renderizarCasais(); // Atualiza a lista após a exclusão
+    } else {
+      console.error('Casal não encontrado');
+    }
+  }
 // Função para exibir a lista de casais no modal
 function renderizarCasais() {
     const coupleTableBody = document.getElementById("coupleTableBody");
@@ -62,7 +121,8 @@ document.getElementById("openCouplesModalBtn").addEventListener("click", () => {
 
 // Fechar o modal ao clicar no "x"
 document.getElementById("closeModal").addEventListener("click", () => {
-    document.getElementById("couplesModal").style.display = "none"; // Oculta o modal
+document.getElementById("couplesModal").style.display = "none"; // Oculta o modal
+    
 });
 
 // Função para abrir o modal de adicionar entrada
@@ -396,7 +456,7 @@ document.getElementById("printReportBtn").addEventListener("click", imprimirRela
 
 
 // Função para gerar e mostrar o recibo
-function gerarRecibo(casal, valor) {
+function gerarReciboModal(casal, valor) {
     const reciboModal = document.getElementById("reciboModal");
     const reciboBody = document.getElementById("reciboBody");
 
@@ -585,6 +645,16 @@ function filterDeleteCouples() {
         }
     });
 }
+// Seleciona o botão de fechar pelo ID
+const closeButton = document.getElementById('closeDeleteEntradaModalBtn');
+
+// Adiciona um evento de clique ao botão
+closeButton.addEventListener('click', function() {
+  // Obtém o modal pelo ID
+  const modal = document.getElementById('deleteEntradaModal');
+  // Esconde o modal
+  modal.style.display = 'none';
+});
 
 // Função para excluir uma entrada
 function excluirEntrada(index) {
@@ -636,7 +706,7 @@ function loadDespesas() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${despesa.razaoSocial}</td>
-            <td>${despesa.valor}</td>
+            <td>${despesa.valorCompra}</td>
             <td>${despesa.dataCompra}</td>
             <td><button onclick="deleteDespesa(${index})">Excluir</button></td>
         `;
@@ -670,17 +740,17 @@ setInterval(showNextBanner, 3000); // Troca o banner a cada 3 segundos
 // Inicialmente, mostre o primeiro banner
 banners[currentBanner].classList.add('active');
 document.getElementById("printCoupleListBtn").addEventListener("click", function() {
-    const printContent = document.getElementById("couplesModal").innerHTML;
-    const originalContent = document.body.innerHTML;
+    window.print(); // Ativa a impressão da página
+
+    // Adiciona uma pequena pausa para garantir que o botão "X" funcione após a impressão
+    setTimeout(() => {
+        
+    }, 1000);
 
     // Substitui o conteúdo do body pelo conteúdo da lista a ser impressa
-    document.body.innerHTML = printContent;
-
     // Comando de impressão
-    window.print();
-
     // Restaura o conteúdo original da página
-    document.body.innerHTML = originalContent;
+    
 });
 // Pega o botão de fechar o modal
 const closeModalBtn = document.getElementById("closeModal");
@@ -754,8 +824,8 @@ function logout() {
     localStorage.removeItem("loginToken"); // Remove o token de login
     window.location.href = 'login.html'; // Redireciona para login.html
 }
-document.getElementById("senha").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") { // Verifica se a tecla pressionada é "Enter"
-        autenticarUsuario(); // Chama a função de autenticação
-    }
+
+  // Certifica-se de que o modal não feche inesperadamente após a impressão
+window.addEventListener('afterprint', function() {
+    document.getElementById("couplesModal").style.display = "block"; // Garante que o modal permaneça aberto após impressão
 });
